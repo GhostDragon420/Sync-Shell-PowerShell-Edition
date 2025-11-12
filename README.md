@@ -8,7 +8,7 @@
 
 ## 🧠 Description
 
-Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers your command history, checks your syntax before running anything, and shows you a preview so you know exactly what will happen before execution. It’s built to run full commands safely and clearly, giving you control and confidence every step of the way
+Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers your command history, checks your syntax before running anything, and shows you a preview so you know exactly what will happen before execution. It’s built to run full commands safely and clearly, giving you control and confidence every step of the way.
 
 ------------------------------------------
 
@@ -18,18 +18,16 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ─────────────────────────────────────────────────────────────
 
-Sync-shell may execute commands that require elevated privileges.
-The script does not automatically request administrator access.
-- Launching from a powershell instance running as admin
-  will inherit full privileges.
-- You can enable elevated execution by setting
-  "run this program as administrator" in the file's properties.
+***Sync-shell may execute commands that require elevated privileges.  
+The script does not automatically request administrator access.***
 
-Always review scripts before execution to avoid unintended
-system changes or errors.
-The author assumes no liability for misuse or system issues.
+***Launching from a powershell instance running as admin will inherit full privileges.  
+You can enable elevated execution by setting "run this program as administrator" in the file's properties.***
+
+**Always review scripts before execution to avoid unintended system changes or errors.  The author assumes no liability for misuse or system issues.***
 
 ─────────────────────────────────────────────────────────────
+
 
 ------------------------------------------
 
@@ -44,8 +42,6 @@ The author assumes no liability for misuse or system issues.
 - 🖥️ **Shell Integration** – Add support for launching Windows cmd.exe when the user types CMD commands.  
 - 📦 **Multi-Format Packaging** – Distribute in three formats:  
   - .exe standalone version  ***COMING SOON***
-  - .psm1 module version with manifest  ***COMING SOON***
-  - .ps1 script version  ***DONE***
 - 🚀 **GitHub Release** – Prepare a proper release on GitHub with all three formats attached.  
 - 📝 **Changelog & Future Plans** – Complete the v1.0.0 changelog and outline plans for future versions.
 
@@ -74,25 +70,20 @@ The author assumes no liability for misuse or system issues.
 
 ------------------------------------------
 
-## 🚀 How to Use - `.psm1` ZIP ***COMING SOON***
+## 🚀 How to Use - `.psm1` ZIP
 
-***COMING SOON***
+1. 	Extract the ZIP package
+2. 	Place the folder in your PowerShell module path (e.g. `Documents\Powershell\Modules`)
+3. 	Open PowerShell 7+
+4. 	Run `Import-Module Sync-Shell-PWSH`
+5. 	Use `Start-SyncShell` to launch the GUI
+6. 	The module will remember your command history and validate syntax before execution
 
-------------------------------------------
-
+-----------------------------------------
+  
 ## 🚀 How to Use - `.exe` ZIP ***COMING SOON***
 
 ***COMING SOON***
-
-------------------------------------------
-
-
-## 📁 Files Included with `.exe` Zip ***COMING SOON***
-
-- `Sync-Shell-PWSH.exe` — stand alone excutable file ***COMING SOON***
-- `README.md` — this usage guide
-- `LICENSE.txt` — terms of use
-- `changelog.txt` — version/date/changelog ***COMING SOON***
 
 ------------------------------------------
 
@@ -105,21 +96,29 @@ The author assumes no liability for misuse or system issues.
 
 ------------------------------------------
 
-## 📁 Files Included with `.psm1` Zip ***COMING SOON***
+## 📁 Files Included with `.psm1` Zip
 
-- `Sync-Shell-PWSH.psm1` — ***COMING SOON***
-- `Sync-Shell-PWSH.manifest` — ***COMING SOON***
+- `Sync-Shell-PWSH.psm1` — the PowerShell module file
+- `Sync-Shell-PWSH.manifest` — the module manifest with metadata and version info
+- `README.md` — this usage guide
+- `LICENSE.txt` — terms of use
+- `changelog.txt` — version/date/changelog 
+
+------------------------------------------
+
+## 📁 Files Included with `.exe` Zip ***COMING SOON***
+
+- `Sync-Shell-PWSH.exe` — stand alone excutable file ***COMING SOON***
 - `README.md` — this usage guide
 - `LICENSE.txt` — terms of use
 - `changelog.txt` — version/date/changelog ***COMING SOON***
 
-------------------------------------------
 
 ## 🌐 Repository & Updates
 
 This `.ps1` version is open-source and free to use.  
+A `.psm1` version for Powershell Module with Manifest.  
 A standalone `.exe` version with auto-updater will be available separately. ***COMING SOON***
-A `.psm1` version for Powershell Module with Manifest. ***COMING SOON***
 
 Visit: [https://sync-first-essentials.com](https://sync-first-essentials.com)  
 GitHub: [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition](https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition)
