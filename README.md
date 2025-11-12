@@ -1,7 +1,7 @@
 ## 🔰 Sync-Shell: PowerShell Edition
-**Author: *Jon Merriman / Juggalospsyco420*
+**Author: *Jon Merriman / Juggalospsyco420*  
 **Version: *1.0.0*  
-**Created: *11-12-2025*
+**Created: *11-12-2025*  
 **Requires: *PowerShell 7.0+*
 
 ------------------------------------------
