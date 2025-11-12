@@ -22,9 +22,6 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
 return
 }
 
-
-
-
 # --- Utility functions ---
 function Test-Syntax {
 	param([string]$code)
@@ -34,9 +31,11 @@ function Test-Syntax {
 	return $errors
 }
 
+# --- Command History ---
+$commandHistory = New-Object System.Collections.Generic.List[string]
+$historyIndex = -1
 
-
-# --- PowerShell GUI Script Runner with History and Run on Enter ---
+# --- Sync-Shell-Core ---
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
@@ -45,25 +44,14 @@ $form = New-Object System.Windows.Forms.Form
 $form.Text = "PowerShell Script Runner"
 $form.Size = New-Object System.Drawing.Size(800, 600)
 $form.StartPosition = "CenterScreen"
-$form.TopMost = $true
+$form.TopMost = $false
 
-# --- History TextBox (Top half) ---
-$historyBox = New-Object System.Windows.Forms.TextBox
-$historyBox.Multiline = $true
-$historyBox.ScrollBars = "Vertical"
-$historyBox.WordWrap = $false
-$historyBox.ReadOnly = $true
-$historyBox.Dock = "Top"
-$historyBox.Height = 280
-$historyBox.Font = New-Object System.Drawing.Font("Consolas", 10)
-$form.Controls.Add($historyBox)
 
 # --- Working Directory Label (moved to top) ---
 $cwdLabel = New-Object System.Windows.Forms.Label
-
-$cwdLabel.Dock = "Top"
+$cwdLabel.Dock = "Bottom"
 $cwdLabel.Height = 20
-$cwdLabel.Font = New-Object System.Drawing.Font("Consolas", 9)
+$cwdLabel.Font = New-Object System.Drawing.Font("Consolas", 10)
 $form.Controls.Add($cwdLabel)
 $updateCWD = {
 	$cwdLabel.Text = "Working Dir: $(Get-Location)"
@@ -74,33 +62,156 @@ $timer.Interval = 1000
 $timer.Add_Tick($updateCWD)
 $timer.Start()
 
-# --- Input TextBox (Bottom half) ---
-$textbox = New-Object System.Windows.Forms.TextBox
-$textbox.Multiline = $true
-$textbox.ScrollBars = "Vertical"
-$textbox.WordWrap = $false
-$textbox.Dock = "Top"
-$textbox.Height = 180
-$textbox.Font = New-Object System.Drawing.Font("Consolas", 10)
-$form.Controls.Add($textbox)
+# --- Unified Log Box (Top) ---
+$outputBox = New-Object System.Windows.Forms.RichTextBox
+$outputBox.Multiline = $true
+$outputBox.ScrollBars = "Both"
+$outputBox.WordWrap = $false
+$outputBox.ReadOnly = $true
+$outputBox.Dock = "Fill"
+$outputBox.Height = 320
+$outputBox.Font = New-Object System.Drawing.Font("Consolas", 10)
+$form.Controls.Add($outputBox)
+
+# --- Input inputBox (Bottom half) ---
+$inputBox = New-Object System.Windows.Forms.RichTextBox
+$inputBox.Multiline = $true
+$inputBox.ScrollBars = "Both"
+$inputBox.WordWrap = $false
+$inputBox.Dock = "Bottom"
+$inputBox.Height = 220
+$inputBox.Font = New-Object System.Drawing.Font("Consolas", 10)
+$inputBox.Text = ">>>> "
+$form.Controls.Add($inputBox)
+
+# --- Run Script ---
+$runScript = {
+	$scriptText = ($inputBox.Text -replace '^>{2,}\s*', '').Trim()
+	if (![string]::IsNullOrWhiteSpace($scriptText)) {
+		$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+		$outputBox.AppendText("[$timestamp] Executing: $scriptText`r`n")
+		
+		$errors = Test-Syntax $scriptText
+		if ($errors.Count -gt 0) {
+			$msg = "Syntax errors detected:`r`n" + ($errors | ForEach-Object { $_.Message }) -join "`r`n"
+			$outputBox.SelectionColor = [System.Drawing.Color]::Red        # for errors
+			$outputBox.AppendText("[$timestamp] Syntax check failed:`r`n$msg`r`n")
+			$outputBox.SelectionStart = $outputBox.Text.Length
+			$outputBox.ScrollToCaret()
+			[System.Windows.Forms.MessageBox]::Show($msg, "Syntax Check Failed", 'OK', 'Error')
+			$inputBox.Text = ">>>> "
+			$inputBox.SelectionStart = $inputBox.Text.Length			
+		return
+		}
+		else {
+			$outputBox.SelectionColor = [System.Drawing.Color]::DarkGreen  # for success
+			$outputBox.AppendText("[$timestamp] Syntax check passed.`r`n")
+		}
+	if ($scriptText -match '^cd\s+("?~.*"?|".+?"|\".+?\"|.+)$') {
+    $targetDir = if ($Matches[1]) { $Matches[1].Trim('''"\') } else { $HOME }
+    try {
+        Set-Location $targetDir
+        $outputBox.AppendText("[$timestamp] Changed directory to: $(Get-Location)`r`n")
+    } catch {
+        $outputBox.AppendText("[$timestamp] Failed to change directory: $_`r`n")
+    }
+		$inputBox.Text = ">>>> "
+		$inputBox.SelectionStart = $inputBox.Text.Length
+    return
+}
+		$tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"
+		Set-Content -Path $tempFile -Value $scriptText -Encoding UTF8
+		$output = & pwsh -NoProfile -ExecutionPolicy Bypass -File $tempFile 2>&1
+		Remove-Item $tempFile -ErrorAction SilentlyContinue
+
+		$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+		$outputBox.AppendText("[$timestamp] PS $(Get-Location)> $scriptText`r`n")
+		$outputBox.AppendText(($output -join "`r`n") + "`r`n")
+		
+		if ($scriptText -notmatch "(--help|\s-h\s|/\?)" -and ($output | Select-String -Pattern '\b(Exception|Error|Failed)\b')) {
+			$outputBox.BackColor = [System.Drawing.Color]::MistyRose
+		}
+		$commandHistory.Add($scriptText)
+		$historyIndex = $commandHistory.Count
+		$inputBox.Text = ">>>> "
+		$inputBox.SelectionStart = $inputBox.Text.Length
+		$outputBox.SelectionStart = $outputBox.Text.Length
+		$outputBox.ScrollToCaret()
+	}
+}
+
+$inputBox.Add_KeyDown({
+	if ($_.KeyCode -eq "Enter" -and $_.Shift) {
+		# Allow newline
+		return
+	}
+	elseif ($_.KeyCode -eq "Enter") {
+		$_.SuppressKeyPress = $true
+		& $runScript
+	}
+
+	elseif ($_.KeyCode -eq "Up") {
+		if ($commandHistory.Count -gt 0) {
+			$historyIndex = [Math]::Max(0, $historyIndex - 1)
+			$inputBox.Text = $commandHistory[$historyIndex]
+			$inputBox.SelectionStart = $inputBox.Text.Length
+		}
+	}
+
+	elseif ($_.KeyCode -eq "Down") {
+		if ($commandHistory.Count -gt 0) {
+			$historyIndex = [Math]::Min($commandHistory.Count - 1, $historyIndex + 1)
+			$inputBox.Text = $commandHistory[$historyIndex]
+			$inputBox.SelectionStart = $inputBox.Text.Length
+		}
+	}
+	elseif ($_.KeyCode -eq "Tab") {
+	$_.SuppressKeyPress = $true
+
+		# Refresh known commands dynamically
+		$knownCommands = Get-Command | Where-Object { $_.CommandType -in 'Cmdlet','Function','Alias' } | Select-Object -ExpandProperty Name
+		$inputLine = $inputBox.Text.TrimStart(">").Trim()
+		$match = $knownCommands | Where-Object { $_ -like "$inputLine*" }
+
+		if ($match.Count -eq 1) {
+			$inputBox.Text = ">>>> $($match[0])"
+			$inputBox.SelectionStart = $inputBox.Text.Length
+		}
+		elseif ($match.Count -gt 1) {
+			$outputBox.AppendText("Autocomplete options:`r`n" + ($match -join "`r`n") + "`r`n")
+			$outputBox.SelectionStart = $outputBox.Text.Length
+			$outputBox.ScrollToCaret()
+		}
+	}
+})
+
+# --- Preview Button ---
+$btnPreview = New-Object System.Windows.Forms.Button
+$btnPreview.Text = "Preview"
+$btnPreview.Dock = "Left"
+$btnPreview.Width = 100
 
 # --- Run Button ---
 $btnRun = New-Object System.Windows.Forms.Button
 $btnRun.Text = "Run"
-$btnRun.Dock = "Left"
+$btnRun.Dock = "Fill"
 $btnRun.Width = 100
 
-# --- Clear Button ---
+# --- Clear Output/Log Button ---
+$btnClearLog = New-Object System.Windows.Forms.Button
+$btnClearLog.Text = "Clear Output"
+$btnClearLog.Dock = "Right"
+$btnClearLog.Width = 100
+$btnClearLog.Add_Click({ $outputBox.Clear() })
+
+# --- Clear Input Button ---
 $btnClear = New-Object System.Windows.Forms.Button
 $btnClear.Text = "Clear Input"
-$btnClear.Dock = "Right"
+$btnClear.Dock = "Left"
 $btnClear.Width = 100
+$btnClear.Add_Click({ $inputBox.Clear() })
 
-# --- Preview Button (Re-added) ---
-$btnPreview = New-Object System.Windows.Forms.Button
-$btnPreview.Text = "Preview"
-$btnPreview.Dock = "Fill"
-
+# --- Save Button ---
 $btnSave = New-Object System.Windows.Forms.Button
 $btnSave.Text = "Save Script"
 $btnSave.Dock = "Right"
@@ -109,127 +220,16 @@ $btnSave.Add_Click({
 	$dialog = New-Object System.Windows.Forms.SaveFileDialog
 	$dialog.Filter = "PowerShell Script (*.ps1)|*.ps1"
 	if ($dialog.ShowDialog() -eq "OK") {
-		Set-Content -Path $dialog.FileName -Value $textbox.Text -Encoding UTF8
+		Set-Content -Path $dialog.FileName -Value $inputBox.Text -Encoding UTF8
 	}
 })
-
-
-# --- Adding Checkbox ---
-$chkCore = New-Object System.Windows.Forms.CheckBox
-$chkCore.Text = "Use PowerShell Core"
-$chkCore.Dock = "Right"
-
 
 # --- Add padding using a Panel for bottom buttons ---
 $panel = New-Object System.Windows.Forms.Panel
 $panel.Dock = "Bottom"
 $panel.Height = 60
-$panel.Controls.AddRange(@($btnRun, $btnClear, $btnPreview, $btnSave, $chkCore))
+$panel.Controls.AddRange(@($btnRun, $btnClear, $btnClearLog, $btnPreview, $btnSave))
 $form.Controls.Add($panel)
-
-# --- History storage ---
-$historyList = New-Object System.Collections.Generic.List[string]
-$historyPath = "$env:USERPROFILE\script_history.txt"
-	if (Test-Path $historyPath) {
-		try {
-			Get-Content $historyPath -Encoding UTF8 | 
-				Where-Object { $_.Trim() -ne "" } | 
-				ForEach-Object { $historyList.Add($_) }
-			} catch {
-			$timestamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-			$historyList.Add("[$timestamp] Failed to load history: $($_.Exception.Message)")
-		}
-	}
-	function Scroll-HistoryBox {$historyBox.SelectionStart = $historyBox.Text.Length
-		$historyBox.ScrollToCaret()
-	}	
-	$historyBox.Lines = $historyList.ToArray()
-Scroll-HistoryBox
-
-$form.Add_FormClosing({
-	Set-Content -Path $historyPath -Value $historyList -Encoding UTF8
-})
-
-
-
-# --- Run Script ---
-$runScript = {
-	$scriptText = $textbox.Text.Trim()
-	if (![string]::IsNullOrWhiteSpace($scriptText)) {
-
-		# --- Syntax validation ---
-		$errors = Test-Syntax $scriptText
-		if ($errors.Count -gt 0) {
-			$msg = "Syntax errors detected:`r`n" +($errors | ForEach-Object { $_.Message }) -join "`r`n"
-			$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-			$historyList.Add("[$timestamp] Syntax check failed:" + ($errors | ForEach-Object { $_.Message }) -join "; ")
-			$historyBox.Lines = $historyList.ToArray()
-			Scroll-HistoryBox
-
-			[System.Windows.Forms.MessageBox]::Show(
-				$msg,
-				"Syntax Check Failed",
-				'OK',
-				'Error'
-			 )
-			return  # stop here if invalid
-		} # end syntax check IF
-
-		# --- Execution path ---
-		$tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"
-			Set-Content -Path $tempFile -Value $scriptText -Encoding UTF8
-		$exe = if ($chkCore.Checked) { "pwsh" } else { "powershell" }
-		$output = & $exe -NoProfile -ExecutionPolicy Bypass -File $tempFile 2>&1
-			Remove-Item $tempFile -ErrorAction SilentlyContinue
-
-		# --- History logging ---
-		$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-		$historyList.Add("[$timestamp] PS $(Get-Location)> $scriptText")
-		$historyBox.Lines = $historyList.ToArray()
-		Scroll-HistoryBox
-
-		# --- Output window ---
-		$outputForm = New-Object System.Windows.Forms.Form
-		$outputForm.Text = "Script Output"
-		$outputForm.Size = New-Object System.Drawing.Size(700, 400)
-		$outputForm.StartPosition = "CenterScreen"
-		$outputForm.TopMost = $true
-		$outputForm.BringToFront()
-
-		$outputBox = New-Object System.Windows.Forms.TextBox
-		$outputBox.Multiline = $true
-		$outputBox.ScrollBars = "Both"
-		$outputBox.WordWrap = $false
-		$outputBox.Font = New-Object System.Drawing.Font("Consolas", 10)
-		$outputBox.ReadOnly = $true
-		$outputBox.Dock = "Fill"
-		$outputBox.Text = $output -join "`r`n"
-		$outputForm.Controls.Add($outputBox)
-		$scriptIsHelp = $scriptText -match "(--help|\s-h\s|/\?)"
-
-
-
-		$trigger = $output | Select-String -Pattern '\b(Exception|Error|Failed)\b' 
-			if (-not $scriptIsHelp -and $trigger) {
-				$outputBox.BackColor = [System.Drawing.Color]::MistyRose
-			Write-Host "Highlight triggered by: $($output | Select-String 'Exception|Error|Failed')"
-				}
-		        $outputForm.Show()
-	}
-}
-
-
-# --- Hook Run button and Enter key ---
-$btnRun.Add_Click($runScript)
-$textbox.Add_KeyDown({
-	if ($_.KeyCode -eq "Enter" -and $_.Modifiers -eq "Control") {
-		$_.SuppressKeyPress = $true
-		& $runScript
-	}
-})
-
-# --- Clear input box ---
-$btnClear.Add_Click({ $textbox.Clear() })
 
 # --- Preview First Script ---
 $btnPreview.Add_Click({
@@ -239,14 +239,14 @@ $btnPreview.Add_Click({
 	$previewForm.StartPosition = "CenterScreen"
 	$previewForm.TopMost = $true
 
-	$previewBox = New-Object System.Windows.Forms.TextBox
+	$previewBox = New-Object System.Windows.Forms.RichTextBox
 	$previewBox.Multiline = $true
 	$previewBox.ScrollBars = "Both"
 	$previewBox.WordWrap = $false
 	$previewBox.Font = New-Object System.Drawing.Font("Consolas", 10)
 	$previewBox.ReadOnly = $true
 	$previewBox.Dock = "Fill"
-	$previewBox.Text = $textbox.Text
+	$previewBox.Text = $inputBox.Text
 	$previewForm.Controls.Add($previewBox)
 
 	# --- Creating Bottom Button Panel ---
@@ -261,7 +261,7 @@ $btnPreview.Add_Click({
 	$btnExecutePreview.Width = 100
 	$btnExecutePreview.Font = New-Object System.Drawing.Font("Consolas", 10)
 	$btnExecutePreview.Add_Click({
-		$textbox.Text = $previewBox.Text
+		$inputBox.Text = $previewBox.Text
 		& $runScript
 		$previewForm.Close()
 	})
@@ -276,12 +276,11 @@ $btnPreview.Add_Click({
 	
 	# --- Add Button Pannel ---
 	$buttonPanel.Controls.AddRange(@($btnExecutePreview, $btnBack))
-	$previewForm.Controls.Add(buttonPanel)
+	$previewForm.Controls.Add($buttonPanel)
 	
 	# --- Show the preview window ---
 	$previewForm.ShowDialog()
 	})
-
 
 # --- Show form ---
 $form.ShowDialog()
