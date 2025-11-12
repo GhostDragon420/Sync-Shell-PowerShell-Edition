@@ -40,7 +40,7 @@ Built for block command execution with sync-first clarity and preview-before-exe
 ## 📁 Files Included
 
 - `Sync-Shell-PWSH.ps1` — the open-source PowerShell module
-- `README.md` — this usage guide
+- `readme.md` — this usage guide
 - `LICENSE.txt` — terms of use
 - `changelog.txt` — version/date/changelog
 
@@ -75,3 +75,4 @@ Please respect the original source, version history, and author credit.
 
 © 2025 Jon Merriman / Juggalospsyco420 — All Rights Reserved  
 This module is part of Sync-First Essentials, built on the Sync-First Gate framework.
+
