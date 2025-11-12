@@ -5,23 +5,6 @@
 **Created:** 2025-11-12  
 **Requires:** PowerShell 7.0+
 
-─────────────────────────────────────────────────────────────
-⚠️ WARNING — ADMINISTRATOR PRIVILEGES!!!!
-─────────────────────────────────────────────────────────────
-!!!Sync-Shell does not currently verify or request elevated
-permissions. Certain commands may require administrator
-privileges to execute correctly.
-
-- If launched from a PowerShell instance running as Admin,
-  Sync-Shell will inherit those privileges.
-- You can also set "Run this program as Administrator"
-  in compatibility properties to enable elevated execution.
-
-The author is not responsible for errors or system changes
-caused by running scripts without appropriate permissions.
-Use caution and verify your working environment before execution.!!!
-─────────────────────────────────────────────────────────────
-
 ---
 
 ## 🧠 Description
@@ -33,33 +16,51 @@ Built for block command execution with sync-first clarity and preview-before-exe
 
 ## ⚙️ Features
 
-- Syntax validation using `PSParser`
-- Preview window for manual review before execution
-- Ctrl+Enter or “Run” button to execute scripts
-- “Save Script” to export `.ps1` files
-- Persistent history logging to `script_history.txt`
-- PowerShell Core toggle
-- Output parsing with error highlighting
+- Syntax validation using `PSParser`  
+- Preview window for manual review before execution  
+- Ctrl+Enter or “Run” button to execute scripts  
+- “Save Script” to export `.ps1` files  
+- Persistent history logging to `script_history.txt`  
+- PowerShell Core toggle  
+- Output parsing with error highlighting  
+
+---
+
+## 📋 Upcoming Features
+
+- 🔄 **GitHub Auto-Update** – Check the GitHub repo for script updates; if a new version is available, prompt the user to update. The script will download, install, and restart automatically, elevating to admin if needed.  
+- ⚠️ **Startup Admin Warning** – Display a legal-style message box or banner about administrator privileges on launch.  
+- 🛡️ **Admin Status Indicator** – Show a visual indicator (Yes/No) if the script is running with administrator rights.  
+- 🎨 **Enhanced Output Window** – Color-code errors, exceptions, and failures for easier readability; improve overall formatting.  
+- 💾 **Autosave / Session Recovery** – Emergency recovery for the input/output boxes in case of crashes, power loss, or unexpected closures (standard save button remains for manual control).  
+- 🆔 **Version Display** – Show the current version (v1.0.0) prominently in the main GUI window.  
+- 🖥️ **Shell Integration** – Add support for launching Windows `cmd.exe` when the user types CMD commands.  
+- 📦 **Multi-Format Packaging** – Distribute in three formats:  
+  - `.exe` standalone version  
+  - `.psm1` module version with manifest  
+  - `.ps1` script version  
+- 🚀 **GitHub Release** – Prepare a proper release on GitHub with all three formats attached.  
+- 📝 **Changelog & Future Plans** – Complete the v1.0.0 changelog and outline plans for future versions.  
 
 ---
 
 ## 🚀 How to Use
 
-1. Launch `Sync-Shell-PWSH.ps1` in PowerShell 7+
-2. Write your script in the input box
-3. Click **Preview** to review before running
-4. Press **Ctrl+Enter** or click **Run** to execute
-5. Use **Save Script** to export your code
-6. History is auto-saved and loaded across sessions
+1. Launch `Sync-Shell-PWSH.ps1` in PowerShell 7+  
+2. Write your script in the input box  
+3. Click **Preview** to review before running  
+4. Press **Ctrl+Enter** or click **Run** to execute  
+5. Use **Save Script** to export your code  
+6. History is auto-saved and loaded across sessions  
 
 ---
 
 ## 📁 Files Included
 
-- `Sync-Shell-PWSH.ps1` — the open-source PowerShell module
-- `README.md` — this usage guide
-- `LICENSE.txt` — terms of use
-- `changelog.txt` — version/date/changelog
+- `Sync-Shell-PWSH.ps1` — the open-source PowerShell module  
+- `README.md` — this usage guide  
+- `LICENSE.txt` — terms of use  
+- `changelog.txt` — version/date/changelog  
 
 ---
 
@@ -69,7 +70,7 @@ This `.ps1` version is open-source and free to use.
 A standalone `.exe` version with auto-updater will be available separately.
 
 Visit: [https://sync-first-essentials.com](https://sync-first-essentials.com)  
-GitHub: [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition](https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition)
+GitHub: [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition](https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition)  
 
 ---
 
@@ -78,9 +79,8 @@ GitHub: [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition](https:
 Sync-Shell is built for clarity, discipline, and reliable execution.  
 Feedback is welcome — whether it's bug reports, improvement ideas, or collaboration proposals.
 
-To reach out:
-- Open an issue or discussion on GitHub:  
-  [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition/issues](https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition/issues)
+To reach out:  
+- Open an issue or discussion on GitHub: [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition/issues](https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition/issues)
 
 All contributions and insights are appreciated.  
 Please respect the original source, version history, and author credit.
@@ -90,4 +90,4 @@ Please respect the original source, version history, and author credit.
 ## 🛡️ Legal
 
 © 2025 Jon Merriman / Juggalospsyco420 — All Rights Reserved  
-This module is part of the Sync-First Gate framework.
+This module is part of Sync-First Essentials, built on the Sync-First Gate framework.
