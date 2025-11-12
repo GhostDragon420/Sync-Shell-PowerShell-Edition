@@ -18,13 +18,14 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ─────────────────────────────────────────────────────────────
 
-***Sync-shell may execute commands that require elevated privileges.  
-The script does not automatically request administrator access.***
+***Sync-shell may execute commands that require elevated privileges.***  
+***The script does not automatically request administrator access.***
 
-***Launching from a powershell instance running as admin will inherit full privileges.  
-You can enable elevated execution by setting "run this program as administrator" in the file's properties.***
+***Launching from a powershell instance running as admin will inherit full privileges.***  
+***You can enable elevated execution by setting "run this program as administrator" in the file's properties.***
 
-**Always review scripts before execution to avoid unintended system changes or errors.  The author assumes no liability for misuse or system issues.***
+***Always review scripts before execution to avoid unintended system changes or errors.***  
+***The author assumes no liability for misuse or system issues.***
 
 ─────────────────────────────────────────────────────────────
 
