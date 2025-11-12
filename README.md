@@ -5,6 +5,23 @@
 **Created:** 2025-11-12  
 **Requires:** PowerShell 7.0+
 
+─────────────────────────────────────────────────────────────
+⚠️ WARNING — ADMINISTRATOR PRIVILEGES!!!!
+─────────────────────────────────────────────────────────────
+!!!Sync-Shell does not currently verify or request elevated
+permissions. Certain commands may require administrator
+privileges to execute correctly.
+
+- If launched from a PowerShell instance running as Admin,
+  Sync-Shell will inherit those privileges.
+- You can also set "Run this program as Administrator"
+  in compatibility properties to enable elevated execution.
+
+The author is not responsible for errors or system changes
+caused by running scripts without appropriate permissions.
+Use caution and verify your working environment before execution.!!!
+─────────────────────────────────────────────────────────────
+
 ---
 
 ## 🧠 Description
