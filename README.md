@@ -24,7 +24,7 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 ***Launching from a powershell instance running as admin will inherit full privileges.***  
 ***You can enable elevated execution by setting "run this program as administrator" in the file's properties.***
 
-***Always review scripts before execution to avoid unintended system changes or errors.***  
+***Always review scripts before execution to avoid unintended system changes or errors.***	
 ***The author assumes no liability for misuse or system issues.***
 
 ─────────────────────────────────────────────────────────────
@@ -60,58 +60,62 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ------------------------------------------
 
-## 🚀 How to Use - `.ps1` version
+## ‍💻 Beginner-friendly — no setup required
 
-1. Launch `Sync-Shell-PWSH.ps1` in PowerShell 7+
-2. Write your script in the input box
-3. Click **Preview** to review before running
-4. Press **Ctrl+Enter** or click **Run** to execute
-5. Use **Save Script** to export your code
-6. History is auto-saved and loaded across sessions
+## 🚀 How to Use - `Sync-Shell-PowerShell-Script-Edition-v1.7z`
+
+1. Extract the `.7z` archive  
+2. Open PowerShell 7+  
+3. Run `Sync-Shell-PWSH.ps1` directly  
+4. Use the GUI to write, preview, and run commands  
+5. History is saved automatically across sessions
 
 ------------------------------------------
 
-## 🚀 How to Use - `.psm1` ZIP
+## ‍🔬 Intermediate — for users familiar with PowerShell modules
 
-1. 	Extract the ZIP package
-2. 	Place the folder in your PowerShell module path (e.g. `Documents\Powershell\Modules`)
-3. 	Open PowerShell 7+
-4. 	Run `Import-Module Sync-Shell-PWSH`
-5. 	Use `Start-SyncShell` to launch the GUI
-6. 	The module will remember your command history and validate syntax before execution
+## 🚀 How to Use - `Sync-Shell-PowerShell-Module-Edition-v1.7z`
+
+1. Extract the `.7z` archive
+2. Open PowerShell 7+  
+3. Run:	`Import-Module "<path>\Sync-Shell-PWSH.psm1"`
+4. Launch with:	`Start-SyncShell`
 
 -----------------------------------------
-  
-## 🚀 How to Use - `.exe` ZIP ***COMING SOON***
 
+## ‍💻 Beginner-friendly — no setup required	
+
+## 🚀 How to Use - Sync-Shell-PowerShell-Standalone-Edition-v1.7z ***COMING SOON***
+
+1. Extract the `.7z` archive
 ***COMING SOON***
 
 ------------------------------------------
 
-## 📁 Files Included with `.ps1` Zip
+## 📁 Files Included with `Sync-Shell-PowerShell-Script-Edition-v1.7z` (`.ps1`)
 
-- `Sync-Shell-PWSH.ps1` — the open-source PowerShell module
-- `README.md` — this usage guide
-- `LICENSE.txt` — terms of use
+- `Sync-Shell-PWSH.ps1` — the standalone PowerShell script
+- `readme.md` — this usage guide
+- `License.txt` — terms of use
 - `changelog.txt` — version/date/changelog
 
 ------------------------------------------
 
-## 📁 Files Included with `.psm1` Zip
+## 📁 Files Included with `Sync-Shell-PowerShell-Module-Edition-v1.7z` (`.psm1`)
 
 - `Sync-Shell-PWSH.psm1` — the PowerShell module file
-- `Sync-Shell-PWSH.manifest` — the module manifest with metadata and version info
-- `README.md` — this usage guide
-- `LICENSE.txt` — terms of use
+- `Sync-Shell-PWSH.psd1` — the module manifest with metadata and version info
+- `readme.md` — this usage guide
+- `License.txt` — terms of use
 - `changelog.txt` — version/date/changelog 
 
 ------------------------------------------
 
-## 📁 Files Included with `.exe` Zip ***COMING SOON***
+## 📁 Files Included with Sync-Shell-PowerShell-Standalone-Edition-v1.7z (`.exe`) ***COMING SOON***
 
-- `Sync-Shell-PWSH.exe` — stand alone excutable file ***COMING SOON***
-- `README.md` — this usage guide
-- `LICENSE.txt` — terms of use
+- `Sync-Shell-PWSH.exe` — standalone executable file ***COMING SOON***
+- `readme.md` — this usage guide
+- `License.txt` — terms of use
 - `changelog.txt` — version/date/changelog ***COMING SOON***
 
 
@@ -144,5 +148,4 @@ Please respect the original source, version history, and author credit.
 
 © 2025 Jon Merriman / Juggalospsyco420 — All Rights Reserved  
 This module is part of Sync-First Essentials, built on the Sync-First Gate framework.
-
 
