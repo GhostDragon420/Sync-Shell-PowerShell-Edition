@@ -1,7 +1,7 @@
 ## 🔰 Sync-Shell: PowerShell Edition
 **Author: *Jon Merriman / Juggalospsyco420*  
 **Version: *1.0.0*  
-**Created: *11-12-2025*  
+**Created: *11-13-2025*  
 **Requires: *PowerShell 7.0+*
 
 ------------------------------------------
@@ -34,16 +34,9 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ## 📋 Upcoming Features
 
-- 🔄 **GitHub Auto-Update** – Check the GitHub repo for script updates; if a new version is available, prompt the user to update. The script will download, install, and restart automatically, elevating to admin if needed.  
-- ⚠️ **Startup Admin Warning** – Display a legal-style message box or banner about administrator privileges on launch.  
-- 🛡️ **Admin Status Indicator** – Show a visual indicator (Yes/No) if the script is running with administrator rights.  
-- 🎨 **Enhanced Output Window** – Color-code errors, exceptions, and failures for easier readability; improve overall formatting.  
+- 🎨 **Enhanced Output Window** – Color-code errors, exceptions, and failures for easier readability; improve overall formatting. 
 - 💾 **Autosave / Session Recovery** – Emergency recovery for the input/output boxes in case of crashes, power loss, or unexpected closures (standard save button remains for manual control).  
-- 🆔 **Version Display** – Show the current version (v1.0.0) prominently in the main GUI window.  
 - 🖥️ **Shell Integration** – Add support for launching Windows cmd.exe when the user types CMD commands.  
-- 📦 **Multi-Format Packaging** – Distribute in three formats:  
-  - .exe standalone version  ***COMING SOON***
-- 🚀 **GitHub Release** – Prepare a proper release on GitHub with all three formats attached.  
 - 📝 **Changelog & Future Plans** – Complete the v1.0.0 changelog and outline plans for future versions.
 
 ------------------------------------------
@@ -85,10 +78,11 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ## ‍💻 Beginner-friendly — no setup required	
 
-## 🚀 How to Use - Sync-Shell-PowerShell-Standalone-Edition-v1.7z ***COMING SOON***
+## 🚀 How to Use - Sync-Shell-PowerShell-Standalone-Edition-v1.7z
 
-1. Extract the `.7z` archive
-***COMING SOON***
+1. Extract the `.7z` archive to your preferred folder.
+2. Launch with `Sync-Shell-PWSH.exe`
+3. And enjoy!!
 
 ------------------------------------------
 
@@ -111,19 +105,23 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ------------------------------------------
 
-## 📁 Files Included with Sync-Shell-PowerShell-Standalone-Edition-v1.7z (`.exe`) ***COMING SOON***
+## 📁 Files Included with Sync-Shell-PowerShell-Standalone-Edition-v1.7z (`.exe`)
 
-- `Sync-Shell-PWSH.exe` — standalone executable file ***COMING SOON***
+- `Sync-Shell-PWSH.exe` — standalone executable file
 - `readme.md` — this usage guide
 - `License.txt` — terms of use
-- `changelog.txt` — version/date/changelog ***COMING SOON***
+- `changelog.txt` — version/date/changelog
+
+------------------------------------------
+I used 7zip to make all the compressed files. Here is the site to download it if you need to.
+7zip: [https://www.7-zip.org/](https://www.7-zip.org/)
 
 
 ## 🌐 Repository & Updates
 
 This `.ps1` version is open-source and free to use.  
 A `.psm1` version for Powershell Module with Manifest.  
-A standalone `.exe` version with auto-updater will be available separately. ***COMING SOON***
+A standalone `.exe` a standalone excutable made for those that dont know how to load a script yet. Does the same thing as `.ps1`.
 
 Visit: [https://sync-first-essentials.com](https://sync-first-essentials.com)  
 GitHub: [https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition](https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition)
