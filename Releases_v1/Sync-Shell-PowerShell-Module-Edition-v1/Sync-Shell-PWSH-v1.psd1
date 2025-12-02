@@ -22,7 +22,7 @@
     PrivateData = @{
         PSData = @{
             Tags         = @('PowerShell', 'GUI', 'Sync-Shell', 'ShellRunner', 'MappedExecution')
-            LicenseUri   = 'https://syncfirstessentials.com/license'
+            LicenseUri   = 'https://license.syncfirstessentials.com'
             ProjectUri   = 'https://github.com/GhostDragon420/Sync-Shell-PowerShell-Edition'
             IconUri      = ''
             ReleaseNotes = 'Initial release of Sync-Shell PowerShell Edition. Includes syntax validation, preview window, persistent history, and mapped output parsing.'
@@ -30,3 +30,4 @@
     }
 
 }
+
