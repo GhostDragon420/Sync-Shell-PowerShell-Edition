@@ -376,4 +376,3 @@ Export-ModuleMember -Function Start-SyncShell
 # Exit Status: Success
 # © [2025] [Jon Merriman/Juggalospsyco420] – All Rights Reserved
 # ─────────────────────────────────────────────────────────────
-}
