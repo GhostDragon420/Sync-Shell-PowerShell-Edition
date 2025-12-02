@@ -1,7 +1,8 @@
-## v1.0.0 – 11-13-2025 - Initial Release
+## v1.0.0 – 11-12-2025 - Initial Release
 - Script and module editions packaged
 - Syntax validation, preview window, persistent history
 - readme and License included
 
 ## V1.0.1 - 12/1/25- Quickfix
+
 - Fix to code to make it work right.
