@@ -4,4 +4,6 @@
 - readme and License included
 
 ## V1.0.1 - 12/1/25- Quickfix
+
 - Fix to code to make it work right.
+- Removed Standalone to work on it and fix it
