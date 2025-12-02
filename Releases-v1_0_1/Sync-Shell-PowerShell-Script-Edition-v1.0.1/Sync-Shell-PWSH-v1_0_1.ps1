@@ -15,6 +15,10 @@
 # Sync-Shell Version Link
 $SyncShellVersion = "v1.0.1"
 
+# Load required assemblies early
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
 # Sync-Shell Elevation Check
 $isAdmin = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 
@@ -371,4 +375,5 @@ $form.ShowDialog()
 # Timestamp: $(Get-Date -Format "MM-dd-yyyy HH:mm:ss")
 # Exit Status: Success
 # © [2025] [Jon Merriman/Juggalospsyco420] – All Rights Reserved
+
 # ─────────────────────────────────────────────────────────────
