@@ -1,0 +1,4 @@
+## v1.0.0 – 11-13-2025 - Initial Release
+- Script and module editions packaged
+- Syntax validation, preview window, persistent history
+- readme and License included
