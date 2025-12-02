@@ -1,7 +1,7 @@
 ## 🔰 Sync-Shell: PowerShell Edition
 **Author: *Jon Merriman / Juggalospsyco420*  
 **Version: *1.0.0*  
-**Created: *11-13-2025*  
+**Created: *11-12-2025*  
 **Requires: *PowerShell 7.0+*
 
 ------------------------------------------
@@ -70,7 +70,7 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 1. Extract the `.7z` archive
 2. Open PowerShell 7+  
-3. Run:	`Import-Module "<path>\Sync-Shell-PWSH.psm1"`
+3. Run:	`Import-Module "<path>\Sync-Shell-PWSH-v1.psm1"`
 4. Launch with:	`Start-SyncShell`
 
 -----------------------------------------
@@ -96,8 +96,8 @@ Sync-Shell is a PowerShell tool with a simple graphical interface. It remembers 
 
 ## 📁 Files Included with `Sync-Shell-PowerShell-Module-Edition-v1.7z` (`.psm1`)
 
-- `Sync-Shell-PWSH.psm1` — the PowerShell module file
-- `Sync-Shell-PWSH.psd1` — the module manifest with metadata and version info
+- `Sync-Shell-PWSH-v1.psm1` — the PowerShell module file
+- `Sync-Shell-PWSH-v1.psd1` — the module manifest with metadata and version info
 - `readme.md` — this usage guide
 - `License.txt` — terms of use
 - `changelog.txt` — version/date/changelog 
@@ -145,4 +145,5 @@ Please respect the original source, version history, and author credit.
 
 © 2025 Jon Merriman / Juggalospsyco420 — All Rights Reserved  
 This module is part of Sync-First Essentials, built on the Sync-First Gate framework.
+
 
