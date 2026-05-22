@@ -5,11 +5,11 @@
 - **Product:** Sync-Shell-Powershell-Edition
 - **Version:** 1.0.2
 - **Status:** SFG-Prototype
-- **Date: 12-1-2025
-- **Updated: 05-22-26
+- **Date:** 12-1-2025
+- **Updated:** 05-22-26
 - **Created by:** [Jon Merriman / Juggalospsyco420 / GhostDragon420](https://github.com/GhostDragon420)
 - This file is made by Sync-First Essentials LLC, where the Sync-First Idea Becomes Real!
-- **Requires: *PowerShell 7.0+*
+- **Requires:** *PowerShell 7.0+*
 
 ## 🧠 Description
 
