@@ -3,7 +3,7 @@
 🏷️ **BRANDING & ABOUT (SFE LLC)**
 
 - **Product:** Sync-Shell-Powershell-Edition
-- **Version:** 1.0.1
+- **Version:** 1.0.2
 - **Status:** SFG-Prototype
 - **Date: 12-1-2025
 - **Updated: 05-22-26
