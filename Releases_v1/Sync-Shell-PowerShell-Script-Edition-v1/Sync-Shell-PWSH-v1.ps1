@@ -1,4 +1,3 @@
-function Start-SyncShell {
 # ┌────────────────────────────────────────────────────────────┐
 # │ 🔰 Sync-Shell: PowerShell Module                           │
 # │ A Sync-Shell Module          			                   │
